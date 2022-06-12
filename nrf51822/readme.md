@@ -23,7 +23,15 @@ And it seems the firmware to try and flash is `pca10028` or `nrf51dk_nrf51422`. 
 
 Downloaded nRF connect (on Windows), which also installed the Segger J-Link software. Neither of the devices are apparently J-link compatible, so this was a dead end.
 
-## Try Particle Debugger with openocd
+## Failed attempt with Particle Debugger with openocd
 
-Read the documentation on theParticle Debugger at <https://support.particle.io/hc/en-us/articles/360039251414-JTAG-and-SWD-Guide>. Install openocd (through brew on a mac).
+Read the documentation on the Particle Debugger at <https://support.particle.io/hc/en-us/articles/360039251414-JTAG-and-SWD-Guide>. Install openocd (through brew on a mac). Install `particle-ftdi.cfg`. Does not recognize the Particle Debugger.
+
+Turns out I had not read things carefully and combined two sets of instructions. The Particle Debugger is a CMSIS-DAP device. Wonderful piece of hardware, see <https://www.keil.com/support/man/docs/dapdebug/>. 
+
+But the bottom line is it can only be used to debug ARM devices. So another dead end.
+
+## Try with MiniModule and openocd
+
+
 
