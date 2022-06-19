@@ -27,6 +27,8 @@ You may have to remove `/Library/Extensions/FTDIUSBSerialDriver.kext`. Google fo
 ```
 # FTDI user-space driver from Apple
 sudo kextunload /System/Library/DriverExtensions/DriverKit.AppleUSBFTDI.dext
+# FTDI user-space driver from Apple
+sudo kextunload /System/Library/DriverExtensions/com.apple.DriverKit-AppleUSBFTDI.dext
 
 # FTDI kernel driver from Apple
 sudo kexunload /System/Library/Extensions/AppleUSBFTDI.kext
