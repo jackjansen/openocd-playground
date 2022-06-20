@@ -103,7 +103,11 @@ This shows the first ten words in memory. Compared to  the `.hex` file content (
 
 Try to run with the nordic test program (from the same version download as the hex file used): does not work.
 
-Next thing to try is re-flashing the original software. That should get us back to the flashing blue LED situation. Maybe I need to flash at another address or something.
+Decided to download all the versions of the nrf toolkit, and try the hex files for all boards. The `pca10001` hex files seemed to work: the red LED on the dongle flashed to show BLE activity. Installed the 3.0 nrf toolkit for `pca10001`, which seems to be the newest that flashes the LED.
+
+Installed the corresponding Wireshark plugin (which required changing some newlines from CRLF to LF and fixing some modes).
+
+The plugin is now sometimes seen from within Wireshark (only when running from the command line, and not with `sudo`), but Wireshark crashes with a Bus Error when you select it. More later.
 
 ## Odds and ends
 
