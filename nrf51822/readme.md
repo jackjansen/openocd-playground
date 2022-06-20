@@ -19,6 +19,8 @@ So, I'm going to download 3.0.0 first, if that works try upgrading to 3.1.0. The
 
 And it seems the firmware to try and flash is `pca10028` or `nrf51dk_nrf51422`. We'll see.
 
+> this turned out to be wrong. See below.
+
 ## Failed attempt using nRF connect
 
 Downloaded nRF connect (on Windows), which also installed the Segger J-Link software. Neither of the devices are apparently J-link compatible, so this was a dead end.
@@ -68,6 +70,10 @@ Now we need the following connections to the MiniModule:
 
 > There was some talk in `swd-resistor-hack.cfg` about needing a 470 ohm resistor but it seems I didn't need it. It needs to go into one or the other signal lines going to SWDIO. The problem below with the write error does not seem to change if I add the resistor between `ADBUS1` (or `ADBUS2`) and `SWDIO`.
 
+And here is a picture that may or may not help:
+
+![](minimodule2nrf51.jpg)
+
 I can now talk to the Adafruit board through openocd, and I see that things like `reset halt` and `regs` and `reset run` work (by noting how the LED behaves).
 
 Start by downloading nrf sniffer firmware version 3.0.0 (because of issues reported with later versions with the Adafruit board). Will later try to upgrade to 4.1.0 (which may have those issues fixed). See "Finding the Firmware" above to see which one I flashed.
@@ -99,15 +105,19 @@ flash write_image sniffer_nrf51dk_nrf51422_4.1.0.hex
 flash mdw 0 10
 ```
 
+(but replace the `flash write_image` argument by the hex file you want to flash).
+
 This shows the first ten words in memory. Compared to  the `.hex` file content (catering for big/little endian issues) and seeing that programming seems to have worked.
 
-Try to run with the nordic test program (from the same version download as the hex file used): does not work.
+Try to run with the nordic test program (from the same version download as the hex file used): does not work. There is also no blue blinking LED to show BLE activity, as there was before I tried flashing.
 
-Decided to download all the versions of the nrf toolkit, and try the hex files for all boards. The `pca10001` hex files seemed to work: the red LED on the dongle flashed to show BLE activity. Installed the 3.0 nrf toolkit for `pca10001`, which seems to be the newest that flashes the LED.
+Decided to download all the versions of the nrf toolkit, and try the hex files for all boards. The `pca10001` hex files seemed to work: the red LED on the dongle flashed to show BLE activity. Installed the 3.0 nrf toolkit for `pca10001`, which seems to be the newest that flashes the LED. It is the red LED, not the blue LED, though.
 
 Installed the corresponding Wireshark plugin (which required changing some newlines from CRLF to LF and fixing some modes).
 
-The plugin is now sometimes seen from within Wireshark (only when running from the command line, and not with `sudo`), but Wireshark crashes with a Bus Error when you select it. More later.
+The plugin is now sometimes seen from within Wireshark (only when running from the command line, and not with `sudo`), but Wireshark crashes with a Bus Error when you select it.
+
+But then I tried running Wireshark on another machine (after the changing of modes and such) and here it **does** work. No idea why. The non-working wireshark was on an Intel MacBook running 10.14, the working one was a brew-installed Wireshark on a Mac mini M1 running MacOS 12.
 
 ## Odds and ends
 
